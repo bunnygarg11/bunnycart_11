@@ -27,11 +27,10 @@ class ShoppingList extends Component {
     <TransitionGroup className='shopping-list'>
     <Table>
     <thead>
-      <th>edit</th>
-      <th>productname</th>
-      <th>itemname</th>
       {items.map(({ _id, name,product_name }) => (
-        
+        <CSSTransition key={_id} timeout={500} classNames='fade'>
+          <ListGroupItem>
+              
                   
                       <tr>
             {this.props.isAuthenticated ? (
@@ -42,17 +41,21 @@ class ShoppingList extends Component {
                 size='sm'
                 onClick={this.onDeleteClick.bind(this, _id)}
               >
-                &times;
+                &times;for(i of items){
+                    items[1]==items[5]
+
+                }
               </Button>
               </td>
             ) : null}
-            <td>{product_name}</td>
             <td>{name}</td>
+            <td>{product_name}</td>
             {/* <span>{product_name}</span> */}
             </tr>
           
 
-        
+          </ListGroupItem>
+        </CSSTransition>
       ))}
         </thead>
             </Table>
@@ -102,3 +105,12 @@ export default connect(
   mapStateToProps,
   { getItems, deleteItem }
 )(ShoppingList);
+function bun11(c){
+    return c
+}
+let array=["milan","mohit","vinod","param"]
+
+array.forEach((x)=>{
+    return x==="milan"
+})
+console.log(array)
