@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, ListGroup, ListGroupItem, Button,Table } from 'reactstrap';
+import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { getItems, deleteItem } from '../actions/itemActions';
@@ -25,17 +25,10 @@ class ShoppingList extends Component {
      
     const Shopping_List= <ListGroup>
     <TransitionGroup className='shopping-list'>
-    <Table>
-    <thead>
-      <th>edit</th>
-      <th>productname</th>
-      <th>itemname</th>
-      {items.map(({ _id, name,product_name }) => (
-        
-                  
-                      <tr>
+      {items.map(({ _id, name }) => (
+        <CSSTransition key={_id} >
+          <ListGroupItem>
             {this.props.isAuthenticated ? (
-                <td>
               <Button
                 className='remove-btn'
                 color='danger'
@@ -44,18 +37,11 @@ class ShoppingList extends Component {
               >
                 &times;
               </Button>
-              </td>
             ) : null}
-            <td>{product_name}</td>
-            <td>{name}</td>
-            {/* <span>{product_name}</span> */}
-            </tr>
-          
-
-        
+            {name}
+          </ListGroupItem>
+        </CSSTransition>
       ))}
-        </thead>
-            </Table>
     </TransitionGroup>
   </ListGroup>
 
