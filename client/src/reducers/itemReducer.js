@@ -10,6 +10,7 @@ import {
   //   loading: false
   // };
   const initialState = {
+    products:[],
     items: [],
     loading: false
   };
@@ -19,18 +20,28 @@ import {
       case GET_ITEMS:
         return {
           ...state,
-          items: action.payload,
+          items:action.payload,
+          loading:false
+        }
+      case "GET_PRODUCTS":
+        return {
+          ...state,
+          products:action.payload,
           loading: false
         };
       case DELETE_ITEM:
+        console.log("rahl")
+        const arr=state.products.filter(product=>product._id!==action.payload)
+        console.log(arr)
         return {
           ...state,
-          items: state.items.filter(item => item._id !== action.payload)
+          items: state.items.filter(item => item._id !== action.payload),
+          products:state.products.filter(product=>product._id!==action.payload)
         };
       case ADD_ITEM:
         return {
           ...state,
-          items: [...action.payload, ...state.items]
+          products: [action.payload, ...state.products]
         };
       case ITEMS_LOADING:
         return {

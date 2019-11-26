@@ -15,7 +15,8 @@ app.use(express.json());
 mongoose
   .connect("mongodb://localhost:27017/shoppingcart-api", { 
     useNewUrlParser: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useUnifiedTopology:true
   }) 
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));

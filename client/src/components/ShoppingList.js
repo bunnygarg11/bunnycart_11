@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
-import { getItems, deleteItem } from '../actions/itemActions';
+import { getItems, deleteItem ,getProducts} from '../actions/itemActions';
 import PropTypes from 'prop-types';
+import ProductList from "./productListTest"
 
 class ShoppingList extends Component {
   static propTypes = {
@@ -13,7 +14,7 @@ class ShoppingList extends Component {
   };
 
   componentDidMount() {
-    this.props.getItems();
+    this.props.getProducts();
   }
 
   onDeleteClick = id => {
@@ -21,12 +22,13 @@ class ShoppingList extends Component {
   };
 
   render() {
-    const { items } = this.props.item;
+    const { products} = this.props.item;
      
     const Shopping_List= <ListGroup>
-    <TransitionGroup className='shopping-list'>
-      {items.map(({ _id, name }) => (
-        <CSSTransition key={_id} >
+    
+      {products.map(({ _id, product_name}) => {
+        console.log(_id)
+        return (  
           <ListGroupItem>
             {this.props.isAuthenticated ? (
               <Button
@@ -38,11 +40,12 @@ class ShoppingList extends Component {
                 &times;
               </Button>
             ) : null}
-            {name}
+            {product_name}
+            <ProductList product_Id={_id}/>
           </ListGroupItem>
-        </CSSTransition>
-      ))}
-    </TransitionGroup>
+        )
+      })}
+    
   </ListGroup>
 
     return (
@@ -86,5 +89,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getItems, deleteItem }
+  { getItems, deleteItem,getProducts}
 )(ShoppingList);

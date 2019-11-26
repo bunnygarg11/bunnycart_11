@@ -47,17 +47,38 @@ this.formchange();
 };
 
 onChange = async val => {
-const arr = this.state.name.filter(item => {
-return item != val ? true : false;
-});
-if (arr.length == this.state.name.length) {
-arr.splice(0, 0, val);
-this.setState({ name: [...arr] });
-} else {
-this.setState({ name: [...arr] });
-}
-};
+// const arr = this.state.name.filter(item => {
+// return item != val ? true : false;
+// //return Object.keys(item)!=Object.keys(val)?true:false
+// });
+// if (arr.length == this.state.name.length) {
+// arr.splice(0, 0, val);
+// this.setState({ name: [...arr] });
+// } else {
+// this.setState({ name: [...arr] });
+// }
 
+    const items = this.state.name;
+    const arr = items.filter(item => {
+      return Object.keys(item)[0] !== Object.keys(val)[0] ? true : false;
+    });
+    // console.log(arr);
+    if (arr.length == this.state.name.length) {
+      this.setState({ name: [val, ...arr] });
+    } else {
+      this.setState({ name: [...arr] });
+    }
+
+};
+onqty=async(val)=>{
+    const items = this.state.name;
+    const arr = items.filter(item => {
+      return Object.keys(item)[0] !== Object.keys(val)[0] ? true : false;
+    });
+    
+        this.setState({ name: [val, ...arr] });
+
+}
 onSubmit = async e => {
 e.preventDefault();
 
@@ -174,8 +195,9 @@ showlists=()=>{
 return this.state.name.map((item)=>{
 return (
 <React.Fragment>
-<li key={item}>
-{item}
+<li key={Object.keys(item)[0]}>
+{Object.keys(item)[0]}
+{Object.values(item)[0]}
 </li>
 </React.Fragment>
 )
@@ -187,17 +209,20 @@ return this.state.itemlist.map(itemm => {
 return (
 <React.Fragment>
 <br />
-<label htmlfor={itemm}>
+<div>
+<label htmlfor={itemm} style={{padding:"1px"}}>
 <input
 type="text"
 name="name"
 key={itemm}
 type="checkbox"
 value={itemm}
-onClick={e => this.onChange(e.target.value)}
+onClick={e => this.onChange({[e.target.value]:1})}
 />
 {itemm}
 </label>
+<input style={{width:"45px"}} min={1} onChange={e=>this.onqty({[itemm]:e.target.value})} type="number"/>
+</div>
 </React.Fragment>
 );
 });

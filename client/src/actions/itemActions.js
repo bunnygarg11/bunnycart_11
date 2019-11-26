@@ -4,10 +4,10 @@ import { tokenConfig } from './authActions';
 // import { returnErrors } from './errorActions';
 import { returnErrors } from './errorActions';
 
-export const getItems = () => dispatch => {
+export const getItems = (product_Id) => dispatch => {
   dispatch(setItemsLoading());
   axios
-    .get('/api/items')
+    .patch('/api/items',{product_Id})
     .then(res =>
       dispatch({
         type: GET_ITEMS,
@@ -18,15 +18,29 @@ export const getItems = () => dispatch => {
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
-
+export const getProducts = () => dispatch => {
+  dispatch(setItemsLoading());
+  axios
+    .get('/api/items/products')
+    .then(res =>
+      dispatch({
+        type: "GET_PRODUCTS",
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+}
 export const addItem = item => (dispatch, getState) => {
   axios
     .post('/api/items', item, tokenConfig(getState))
-    .then(res =>
-      dispatch({
+    .then(res =>{
+      console.log(res.data)
+      return dispatch({
         type: ADD_ITEM,
-        payload: res.data
-      })
+        payload: res.data.product
+      })}
     )
     .catch(err =>
       dispatch(returnErrors(err.response.data, err.response.status))
