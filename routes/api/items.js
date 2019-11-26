@@ -33,14 +33,14 @@ router.post('/', auth, async(req, res) => {
   console.log(prod1)
   if(prod1){
 
-    itemlist.map((item)=>{
-      Item.insertMany({
-       product_id:prod1._id,
-       name:Object.keys(item)[0],
-       quantity:Object.values(item)[0]
-      })
-   })
-   return res.json({product:prod1})
+  //   itemlist.map((item)=>{
+  //     Item.insertMany({
+  //      product_id:prod1._id,
+  //      name:Object.keys(item)[0],
+  //      quantity:Object.values(item)[0]
+  //     })
+  //  })
+   return res.status(400).json({msg:"Product Name already exist"})
   }else{
     const product=new Product({
       product_name:Product_name

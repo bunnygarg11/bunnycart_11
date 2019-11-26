@@ -48,6 +48,11 @@ import {
           ...state,
           loading: true
         };
+      case "PRODUCT_REPEATED":
+        return {
+          ...state,
+          loading:false
+        }
       default:
         return state;
     }

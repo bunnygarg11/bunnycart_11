@@ -35,16 +35,22 @@ export const getProducts = () => dispatch => {
 export const addItem = item => (dispatch, getState) => {
   axios
     .post('/api/items', item, tokenConfig(getState))
-    .then(res =>{
-      console.log(res.data)
-      return dispatch({
+    .then(res =>
+     
+      dispatch({
         type: ADD_ITEM,
         payload: res.data.product
-      })}
+      })
     )
-    .catch(err =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
+    .catch(err =>{
+      dispatch(
+        returnErrors(err.response.data, err.response.status,"PRODUCT_REPEATED")
+      );
+      dispatch({
+        type:"PRODUCT_REPEATED"
+      })
+    })
+    
 };
 
 export const deleteItem = id => (dispatch, getState) => {

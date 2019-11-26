@@ -7,10 +7,12 @@ ModalBody,
 Form,
 FormGroup,
 Label,
-Input
+Input,
+Alert
 } from "reactstrap";
 import { connect } from "react-redux";
 import { addItem } from "../actions/itemActions";
+import {clearErrors} from "../actions/errorActions"
 import PropTypes from "prop-types";
 
 class ItemModal extends Component {
@@ -20,7 +22,8 @@ name: [],
 itemlist: ["item1", "item2", "item3", "item4"],
 step: 1,
 Product_name:"",
-formcontent: null
+formcontent: null,
+msg:null
 };
 
 static propTypes = {
@@ -30,8 +33,27 @@ isAuthenticated: PropTypes.bool
 componentDidMount=()=>{
 this.formchange()
 }
-toggle = () => {
-this.setState({
+componentDidUpdate(prevProps) {
+  const { error, isAuthenticated } = this.props;
+  if (error !== prevProps.error) {
+    // Check for register error
+    if (error.id === "PRODUCT_REPEATED") {
+      this.setState({ msg: error.msg.msg });
+    } else {
+      this.setState({ msg: null });
+    }
+  }
+
+  // If authenticated, close modal
+  // if (this.state.modal) {
+  //   if (isAuthenticated) {
+  //     this.toggle();
+  //   }
+  // }
+}
+toggle = async () => {
+ await this.props.clearErrors()
+await this.setState({
 modal: !this.state.modal
 });
 };
@@ -115,7 +137,7 @@ await this.props.addItem(newItem)
 //  this.setState({step:1})
 //  this.setState({formcontent:null})
 
-this.toggle();
+// this.toggle();
 };
 
 formchange = () => {
@@ -248,6 +270,9 @@ Add Item
 <Modal isOpen={this.state.modal} toggle={this.toggle}>
 <ModalHeader toggle={this.toggle}>Add To Shopping List</ModalHeader>
 <ModalBody>
+{this.state.msg ? (
+              <Alert color='danger'>{this.state.msg}</Alert>
+            ) : null}
 <Form onSubmit={this.onSubmit}>
 <FormGroup>
 <Label for="item">Item</Label>
@@ -265,7 +290,8 @@ Add Item
 const mapStateToProps = state => ({
 item: state.item,
 isAuthenticated: state.auth.isAuthenticated,
-email: state.auth.user
+email: state.auth.user,
+error:state.error
 });
 
-export default connect(mapStateToProps, { addItem })(ItemModal);
+export default connect(mapStateToProps, { addItem,clearErrors })(ItemModal);
