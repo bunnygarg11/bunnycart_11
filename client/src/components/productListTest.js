@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux';
 import { addItem,getItems,deleteItem} from '../actions/itemActions';
 import PropTypes from 'prop-types';
-
+import EditModal from "./editModal"
 class ItemModal extends Component {
   state = {
     modal: false,
@@ -54,6 +54,7 @@ class ItemModal extends Component {
     // Close modal
     this.toggle();
   };
+ 
 
   render() {
     console.log(this.props)
@@ -72,10 +73,13 @@ class ItemModal extends Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Add To Shopping List</ModalHeader>
           <ModalBody>
+            {/* {this.rendermodal()} */}
+            <EditModal product={this.props.product_name}/>
             <Container>
                 <ListGroup>
                     {this.props.item.map(item=>(
-             <ListGroupItem>
+                      <ListGroupItem>
+                      
                  <Button
                 className='remove-btn'
                 color='danger'
@@ -86,6 +90,7 @@ class ItemModal extends Component {
               </Button>
                 {item.name}
                 {item.quantity}
+                
               </ListGroupItem>
                     ))}
 
@@ -100,6 +105,7 @@ class ItemModal extends Component {
 
 const mapStateToProps = (state,ownProps) => ({
   item: state.item.items,
+  
   isAuthenticated: state.auth.isAuthenticated
 });
 

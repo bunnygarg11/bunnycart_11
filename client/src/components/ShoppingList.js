@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getItems, deleteItem ,getProducts} from '../actions/itemActions';
 import PropTypes from 'prop-types';
 import ProductList from "./productListTest"
+import EditModal from "./editModal"
 
 class ShoppingList extends Component {
   static propTypes = {
@@ -41,7 +42,8 @@ class ShoppingList extends Component {
               </Button>
             ) : null}
             {product_name}
-            <ProductList product_Id={_id}/>
+            <ProductList product_Id={_id} product_name={product_name}/>
+            
           </ListGroupItem>
         )
       })}

@@ -53,6 +53,10 @@ import {
           ...state,
           loading:false
         }
+        case "UPDATE_ITEM":
+          return {
+            ...state
+          }
       default:
         return state;
     }
