@@ -160,6 +160,8 @@ showlists=()=>{
             <React.Fragment>
                 <li key={ite.name}>
                     {ite.name}
+                    <br/>
+                    {ite.quantity}
                 </li>
             </React.Fragment>
         )
@@ -227,6 +229,7 @@ this.toggle()
   render() {
       const items=(
         <React.Fragment>
+          <p>{this.state.Product_name}</p>
         {this.renderlist11()}
         <br/>
         <input
@@ -249,7 +252,7 @@ this.toggle()
 
       const preview=(
         <React.Fragment>
-            <Form onSubmit={this.onSubmit}>
+            {/* <Form onSubmit={this.onSubmit}> */}
             <p>{this.state.Product_name}</p>
         {this.showlists()}
         <input
@@ -262,7 +265,7 @@ this.toggle()
         <Button color="dark" style={{ marginTop: "2rem" }} block>
         Add Item
         </Button>
-            </Form>
+            {/* </Form> */}
        
         </React.Fragment>
       )
@@ -284,7 +287,9 @@ this.toggle()
             {/* {this.state.msg ? (
               <Alert color='danger'>{this.state.msg}</Alert>
             ) : null} */}
+            <Form onSubmit={this.onSubmit}>
             {this.state.step===1?items:preview}
+            </Form>
           </ModalBody>
         </Modal>
       </div>

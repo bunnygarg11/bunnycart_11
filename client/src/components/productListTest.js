@@ -23,7 +23,7 @@ class ItemModal extends Component {
     isAuthenticated: PropTypes.bool
   };
   async componentDidMount(){
-    console.log(this.props)
+    
       this.props.getItems(this.props.product_Id)
   }
   onDeleteClick = id => {
@@ -57,7 +57,7 @@ class ItemModal extends Component {
  
 
   render() {
-    console.log(this.props)
+    
     return (
       <div>
         {this.props.isAuthenticated ? (
@@ -74,7 +74,7 @@ class ItemModal extends Component {
           <ModalHeader toggle={this.toggle}>Add To Shopping List</ModalHeader>
           <ModalBody>
             {/* {this.rendermodal()} */}
-            <EditModal product={this.props.product_name}/>
+            <EditModal product={this.props.product_name} product_id={this.props.product_Id}/>
             <Container>
                 <ListGroup>
                     {this.props.item.map(item=>(

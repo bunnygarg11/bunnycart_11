@@ -28,7 +28,7 @@ class ShoppingList extends Component {
     const Shopping_List= <ListGroup>
     
       {products.map(({ _id, product_name}) => {
-        console.log(_id)
+
         return (  
           <ListGroupItem>
             {this.props.isAuthenticated ? (

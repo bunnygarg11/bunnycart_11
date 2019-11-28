@@ -52,7 +52,6 @@ export const addItem = item => (dispatch, getState) => {
     })
     
 };
-
 export const deleteItem = id => (dispatch, getState) => {
   axios
     .delete(`/api/items/${id}`, tokenConfig(getState))
@@ -66,21 +65,22 @@ export const deleteItem = id => (dispatch, getState) => {
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
-export const updateItem=item=>(dispatch,getState)=>{
+
+export const updateItem = item => (dispatch, getState) => {
+
   console.log(item)
-
-  axios.post("/api/items/updateItems",item,tokenConfig(getState))
-  .then(res=>
-
-    dispatch({
-      type:"UPDATE_ITEM"
-    })
+  axios
+    .post('/api/items/update', item, tokenConfig(getState))
+    .then(res =>{
+console.log("ghsfgsh")
+     return dispatch({
+        type: "UPDATE_ITEM",
+        payload: res.data
+      })
+    }).catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
     )
-    .catch(err=>
-      dispatch(returnErrors(err.response.data,err.response.status))
-      )
-}
-
+};
 export const setItemsLoading = () => {
   return {
     type: ITEMS_LOADING
